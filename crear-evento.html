@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Evento - EventPro</title>
+    <link rel="stylesheet" href="crear-evento.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                EventPro
+            </a>
+            <nav class="nav-links">
+                <a href="Inicio Sesion.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Inicio
+                </a>
+                <a href="conoce-mas.html" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    Conoce Más
+                </a>
+                <button class="nav-link tutorial-btn" onclick="showTutorial()">
+                    <i class="fas fa-question-circle"></i>
+                    ¿Cómo usar?
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Progress Header -->
+        <div class="progress-header">
+            <h1>🎉 ¡Crea tu Evento Perfecto!</h1>
+            <p>Te guiaremos paso a paso para crear un evento inolvidable</p>
+            <button class="tutorial-hint" onclick="showTutorial()">
+                <i class="fas fa-graduation-cap"></i>
+                Ver Tutorial
+            </button>
+        </div>
+
+        <!-- Progress Container -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1">1</div>
+                <div class="progress-step" data-step="2">2</div>
+                <div class="progress-step" data-step="3">3</div>
+                <div class="progress-step" data-step="4">4</div>
+            </div>
+        </div>
+
+
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Step 1: Tipo de Evento -->
+            <div class="form-step active" id="step-1">
+                <div class="step-header">
+                    <h2>¿Qué tipo de evento quieres organizar?</h2>
+                    <p>Selecciona el tipo de evento para obtener recomendaciones personalizadas</p>
+                </div>
+                
+                <div class="event-types">
+                    <div class="event-type" data-id="1" data-name="Cumpleaños">
+                        <div class="event-type-icon">🎂</div>
+                        <h3>Cumpleaños</h3>
+                        <p>Celebración de cumpleaños para todas las edades</p>
+                    </div>
+                    
+                    <div class="event-type" data-id="2" data-name="Boda">
+                        <div class="event-type-icon">💒</div>
+                        <h3>Boda</h3>
+                        <p>Ceremonia nupcial y recepción</p>
+                    </div>
+                    
+                    <div class="event-type" data-id="3" data-name="Evento Corporativo">
+                        <div class="event-type-icon">🏢</div>
+                        <h3>Evento Corporativo</h3>
+                        <p>Reuniones, conferencias y eventos empresariales</p>
+                    </div>
+                    
+                    <div class="event-type" data-id="4" data-name="Festejo">
+                        <div class="event-type-icon">🎉</div>
+                        <h3>Festejo</h3>
+                        <p>Celebraciones generales y eventos sociales</p>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <div class="step-help">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Selecciona el tipo de evento que mejor se adapte a tus necesidades</span>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="step1ContinueBtn" onclick="nextStep()" disabled>
+                        Continuar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Detalles del Evento -->
+            <div class="form-step" id="step-2">
+                <div class="step-header">
+                    <h2>📝 Detalles de tu Evento</h2>
+                    <p>Completa la información básica de tu evento</p>
+                </div>
+                
+                <div class="event-form">
+                    <div class="form-group">
+                        <label for="eventName">Nombre del Evento *</label>
+                        <input type="text" id="eventName" placeholder="Ej: Cumpleaños de María" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDate">Fecha del Evento *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventTime">Hora de Inicio *</label>
+                        <input type="time" id="eventTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Ubicación *</label>
+                        <input type="text" id="eventLocation" placeholder="Dirección o lugar del evento" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventGuests">Número de Invitados *</label>
+                        <input type="number" id="eventGuests" placeholder="Cantidad de personas" min="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDescription">Descripción del Evento</label>
+                        <textarea id="eventDescription" rows="4" placeholder="Describe tu evento, tema, estilo, etc."></textarea>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">
+                        Calcular Presupuesto <i class="fas fa-calculator"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Calculador de Presupuesto -->
+            <div class="form-step" id="step-3">
+                <div class="step-header">
+                    <h2>💰 Calcula tu Presupuesto</h2>
+                    <p>Ingresa los costos estimados de cada elemento para calcular el presupuesto total</p>
+                </div>
+                
+                <div class="budget-calculator">
+                    <div class="budget-section">
+                        <h3>🍽️ Catering y Alimentación</h3>
+                        <div class="budget-items">
+                            <div class="budget-item">
+                                <label>Platos por persona:</label>
+                                <input type="number" id="platosPorPersona" min="1" max="10" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Costo por plato (ARS):</label>
+                                <input type="number" id="costoPlato" min="0" step="100" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Bebidas por persona (ARS):</label>
+                                <input type="number" id="costoBebidas" min="0" step="50" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-section">
+                        <h3>🎨 Decoración y Ambientación</h3>
+                        <div class="budget-items">
+                            <div class="budget-item">
+                                <label>Decoración básica (ARS):</label>
+                                <input type="number" id="decoracionBasica" min="0" step="500" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Flores y arreglos (ARS):</label>
+                                <input type="number" id="floresArreglos" min="0" step="500" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Iluminación especial (ARS):</label>
+                                <input type="number" id="iluminacionEspecial" min="0" step="500" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-section">
+                        <h3>🎵 Entretenimiento y Música</h3>
+                        <div class="budget-items">
+                            <div class="budget-item">
+                                <label>DJ o Músico (ARS):</label>
+                                <input type="number" id="entretenimiento" min="0" step="1000" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Equipos de sonido (ARS):</label>
+                                <input type="number" id="equiposSonido" min="0" step="500" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-section">
+                        <h3>📸 Servicios Adicionales</h3>
+                        <div class="budget-items">
+                            <div class="budget-item">
+                                <label>Fotógrafo (ARS):</label>
+                                <input type="number" id="fotografo" min="0" step="1000" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Videógrafo (ARS):</label>
+                                <input type="number" id="videografo" min="0" step="1000" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                            <div class="budget-item">
+                                <label>Otros servicios (ARS):</label>
+                                <input type="number" id="otrosServicios" min="0" step="500" value="" placeholder="0" oninput="calcularPresupuesto()">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="budget-total">
+                        <h3>💰 Presupuesto Total</h3>
+                        <div class="total-amount">
+                            <span id="presupuestoTotal">$0</span> ARS
+                        </div>
+                        <div class="total-breakdown">
+                            <p><strong>Desglose:</strong></p>
+                            <ul id="desglosePresupuesto">
+                                <!-- Se llena dinámicamente -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">
+                        Continuar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirmación y Recomendaciones -->
+            <div class="form-step" id="step-4">
+                <div class="step-header">
+                    <h2>✅ Confirma tu Evento</h2>
+                    <p>Revisa todos los detalles y recibe recomendaciones personalizadas</p>
+                </div>
+                
+                <!-- Resumen del Evento -->
+                <div class="event-summary">
+                    <div id="eventSummary">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+                
+                <!-- Recomendaciones -->
+                <div class="recommendations">
+                    <h3>🎯 Recomendaciones Personalizadas</h3>
+                    <div id="recommendationsContent">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="step-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="finalizarEvento()">
+                        Finalizar Evento <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Éxito -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h2>¡Evento Creado Exitosamente!</h2>
+            <p>Tu evento ha sido registrado en el sistema. Recibirás un resumen por correo electrónico.</p>
+            <div id="modalEventDetails">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="goToDashboard()">
+                    <i class="fas fa-home"></i> Ir al Dashboard
+                </button>
+                <button class="btn btn-secondary" onclick="createAnotherEvent()">
+                    <i class="fas fa-plus"></i> Crear Otro Evento
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del Tutorial -->
+    <div class="modal tutorial-modal" id="tutorialModal">
+        <div class="tutorial-content">
+            <button class="close-btn" onclick="closeTutorial()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="tutorial-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <h2>🎓 Mini Tutorial: Crear Evento</h2>
+            <p>4 pasos simples para crear tu evento perfecto</p>
+            
+            <div class="tutorial-intro">
+                <h3>✨ Tutorial Simple y Rápido</h3>
+                <p>4 pasos fáciles para crear tu evento en menos de 5 minutos</p>
+            </div>
+            
+            <div class="tutorial-steps">
+                <!-- Paso 1 -->
+                <div class="tutorial-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>🎯 Paso 1: Elige el Tipo de Evento</h3>
+                        <p><strong>¿Qué hacer?</strong></p>
+                        <div class="step-action">
+                            <i class="fas fa-hand-pointer"></i>
+                            <span>Haz clic en una de las 4 tarjetas que verás abajo</span>
+                        </div>
+                        <p><strong>Opciones:</strong></p>
+                        <ul>
+                            <li>🎂 <strong>Cumpleaños</strong> - Para celebraciones personales</li>
+                            <li>💒 <strong>Boda</strong> - Para ceremonias nupciales</li>
+                            <li>🏢 <strong>Evento Corporativo</strong> - Para empresas</li>
+                            <li>🎉 <strong>Festejo</strong> - Para celebraciones generales</li>
+                        </ul>
+                        <div class="step-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>Tip:</strong> La tarjeta seleccionada se resaltará en azul
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="tutorial-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>📝 Paso 2: Completa los Datos</h3>
+                        <p><strong>¿Qué hacer?</strong></p>
+                        <div class="step-action">
+                            <i class="fas fa-keyboard"></i>
+                            <span>Llena el formulario que aparecerá</span>
+                        </div>
+                        <p><strong>Campos obligatorios (*):</strong></p>
+                        <ul>
+                            <li>📝 <strong>Nombre del Evento</strong> - Ej: "Cumpleaños de María"</li>
+                            <li>📅 <strong>Fecha</strong> - Selecciona en el calendario</li>
+                            <li>⏰ <strong>Hora</strong> - Elige la hora de inicio</li>
+                            <li>📍 <strong>Ubicación</strong> - Escribe la dirección</li>
+                            <li>👥 <strong>Invitados</strong> - Número de personas</li>
+                        </ul>
+                        <div class="step-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>Tip:</strong> Completa todos los campos con * para continuar
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="tutorial-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>💰 Paso 3: Calcula el Presupuesto</h3>
+                        <p><strong>¿Qué hacer?</strong></p>
+                        <div class="step-action">
+                            <i class="fas fa-calculator"></i>
+                            <span>Ingresa los costos estimados en cada campo</span>
+                        </div>
+                        <p><strong>4 categorías principales:</strong></p>
+                        <ul>
+                            <li>🍽️ <strong>Catering</strong> - Comida y bebidas</li>
+                            <li>🎨 <strong>Decoración</strong> - Flores, iluminación</li>
+                            <li>🎵 <strong>Entretenimiento</strong> - DJ, música</li>
+                            <li>📸 <strong>Servicios</strong> - Fotógrafo, etc.</li>
+                        </ul>
+                        <div class="step-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>Tip:</strong> El total se calcula automáticamente
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="tutorial-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>✅ Paso 4: Finaliza tu Evento</h3>
+                        <p><strong>¿Qué hacer?</strong></p>
+                        <div class="step-action">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Revisa todo y haz clic en "Finalizar Evento"</span>
+                        </div>
+                        <p><strong>Verifica que tengas:</strong></p>
+                        <ul>
+                            <li>✅ Tipo de evento seleccionado</li>
+                            <li>✅ Todos los datos completos</li>
+                            <li>✅ Presupuesto calculado</li>
+                        </ul>
+                        <div class="step-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>Tip:</strong> Puedes modificar cualquier campo antes de finalizar
+                        </div>
+                        <div class="step-final">
+                            <i class="fas fa-trophy"></i>
+                            <span>¡Listo! Ya sabes crear eventos con EventPro</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tutorial-navigation">
+                <div class="tutorial-progress">
+                    <span>Paso</span>
+                    <span id="currentTutorialStep">1</span>
+                    <span>de 4</span>
+                </div>
+                
+                <div class="tutorial-actions">
+                    <button class="btn-outline" id="prevTutorialBtn" onclick="prevTutorialStep()">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button class="btn-outline" id="nextTutorialBtn" onclick="nextTutorialStep()">
+                        Siguiente <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tutorial-actions" style="justify-content: center; margin-top: 2rem;">
+                <button class="btn btn-primary" id="startTutorialBtn" onclick="startTutorial()">
+                    <i class="fas fa-play"></i> Comenzar Tutorial
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="crear-evento.js"></script>
+</body>
+</html>

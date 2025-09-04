@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPro - Organizador de Eventos</title>
+    <link rel="stylesheet" href="Base.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h1>EventPro</h1>
+            </div>
+            <nav class="nav">
+                <a href="Inicio Sesion.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Inicio
+                </a>
+                <a href="conoce-mas.html" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    Conoce Más
+                </a>
+                <div class="theme-config">
+                    <button class="theme-toggle" onclick="toggleThemeMenu()">
+                        <i class="fas fa-palette"></i>
+                        Temas
+                    </button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <div class="theme-selector">
+                            <label for="theme-select">Tema:</label>
+                            <select id="theme-select" onchange="changeTheme(this.value)">
+                                <option value="default">Tema por defecto</option>
+                                <option value="dark">Tema oscuro</option>
+                                <option value="nature">Tema naturaleza</option>
+                                <option value="sunset">Tema atardecer</option>
+                                <option value="ocean">Tema océano</option>
+                                <option value="custom">Personalizado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="custom-theme" id="custom-theme" style="display: none;">
+                            <h4>Colores personalizados</h4>
+                            <div class="color-picker">
+                                <div class="color-item">
+                                    <label>Color principal:</label>
+                                    <input type="color" id="primary-color" value="#6366f1" onchange="updateCustomTheme()">
+                                </div>
+                                <div class="color-item">
+                                    <label>Color secundario:</label>
+                                    <input type="color" id="secondary-color" value="#8b5cf6" onchange="updateCustomTheme()">
+                                </div>
+                                <div class="color-item">
+                                    <label>Color de fondo:</label>
+                                    <input type="color" id="background-color" value="#f8fafc" onchange="updateCustomTheme()">
+                                </div>
+                                <div class="color-item">
+                                    <label>Color de texto:</label>
+                                    <input type="color" id="text-color" value="#1a1a1a" onchange="updateCustomTheme()">
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" onclick="saveCustomTheme()">Guardar tema</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard tipo Canva -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="primary">
+                        <a href="crear-evento.html" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Crear evento
+                        </a>
+                        <button class="btn btn-secondary" onclick="goTo('#plantillas')">
+                            <i class="fas fa-layer-group"></i> Ver plantillas
+                        </button>
+                    </div>
+
+                    <div class="section-title">Navegación</div>
+                    <nav class="menu">
+                        <a href="#recientes"><span class="icon"><i class="fas fa-clock"></i></span> Recientes</a>
+                        <a href="#borradores"><span class="icon"><i class="fas fa-file"></i></span> Borradores</a>
+                        <a href="#mis-eventos"><span class="icon"><i class="fas fa-calendar-check"></i></span> Mis eventos</a>
+                        <a href="#favoritos"><span class="icon"><i class="fas fa-heart"></i></span> Favoritos</a>
+                    </nav>
+
+                    <div class="section-title">Gestión</div>
+                    <nav class="menu">
+                        <a href="#invitaciones"><span class="icon"><i class="fas fa-envelope-open-text"></i></span> Invitaciones y RSVPs</a>
+                        <a href="#proveedores"><span class="icon"><i class="fas fa-people-carry"></i></span> Proveedores</a>
+                        <a href="#lugares"><span class="icon"><i class="fas fa-map-marker-alt"></i></span> Lugares</a>
+                        <a href="#calendario"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Calendario</a>
+                        <a href="#presupuestos"><span class="icon"><i class="fas fa-wallet"></i></span> Presupuestos</a>
+                    </nav>
+
+                    
+                </aside>
+
+                <!-- Contenido principal -->
+                <section class="content">
+                    <div class="content-header">
+                        <div>
+                            <h2 id="plantillas">Descubre plantillas increíbles</h2>
+                            <p style="color: var(--text-secondary); margin-top: 8px;">Crea eventos únicos con nuestras plantillas profesionales</p>
+                        </div>
+                        <div class="searchbar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Buscar plantillas..." oninput="searchTemplates(this.value)" />
+                        </div>
+                    </div>
+
+                    <div class="card-grid">
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-birthday-cake"></i></div>
+                            <div class="info">
+                                <strong>Invitación de cumpleaños</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Diseño colorido y divertido para celebrar</p>
+                                <div class="chip-row">
+                                    <span class="chip">Fiesta</span>
+                                    <span class="chip">Infantil</span>
+                                    <span class="chip">Colorido</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="boda">
+                            <div class="thumb"><i class="fas fa-ring"></i></div>
+                            <div class="info">
+                                <strong>Boda</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Elegante y romántico para tu día especial</p>
+                                <div class="chip-row">
+                                    <span class="chip">Boda</span>
+                                    <span class="chip">Elegante</span>
+                                    <span class="chip">Romántico</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="corporativo">
+                            <div class="thumb"><i class="fas fa-briefcase"></i></div>
+                            <div class="info">
+                                <strong>Invitación corporativa</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Profesional para eventos empresariales</p>
+                                <div class="chip-row">
+                                    <span class="chip">Empresa</span>
+                                    <span class="chip">Networking</span>
+                                    <span class="chip">Profesional</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="conferencia">
+                            <div class="thumb"><i class="fas fa-microphone"></i></div>
+                            <div class="info">
+                                <strong>Conferencia</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Perfecto para eventos educativos</p>
+                                <div class="chip-row">
+                                    <span class="chip">Tecnología</span>
+                                    <span class="chip">Educación</span>
+                                    <span class="chip">Conferencia</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-music"></i></div>
+                            <div class="info">
+                                <strong>Concierto / Show</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Vibrante para eventos musicales</p>
+                                <div class="chip-row">
+                                    <span class="chip">Música</span>
+                                    <span class="chip">Festival</span>
+                                    <span class="chip">Entretenimiento</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-hamburger"></i></div>
+                            <div class="info">
+                                <strong>Feria Gastronómica</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Delicioso para eventos culinarios</p>
+                                <div class="chip-row">
+                                    <span class="chip">Gourmet</span>
+                                    <span class="chip">Local</span>
+                                    <span class="chip">Culinario</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="boda">
+                            <div class="thumb"><i class="fas fa-heart"></i></div>
+                            <div class="info">
+                                <strong>Invitación de compromiso</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Romántico para anunciar tu compromiso</p>
+                                <div class="chip-row">
+                                    <span class="chip">Compromiso</span>
+                                    <span class="chip">Romántico</span>
+                                    <span class="chip">Elegante</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="corporativo">
+                            <div class="thumb"><i class="fas fa-chart-line"></i></div>
+                            <div class="info">
+                                <strong>Otro (Plantilla personalizada)</strong>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Plantilla personalizada para cualquier tipo de evento</p>
+                                <div class="chip-row">
+                                    <span class="chip">Personalizado</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>EventPro</h4>
+                    <p>Organizamos eventos que dejan huella</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guías de eventos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Tips de organización</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Plantillas gratis</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog de eventos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 234 567 890</li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@eventpro.com</li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Calle Principal 123</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventPro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function goTo(url) { 
+            if (url.startsWith('#')) {
+                // Scroll suave a sección
+                const element = document.querySelector(url);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                window.location.href = url;
+            }
+        }
+
+        function filterTemplates(category) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchTemplates(query) {
+            const cards = document.querySelectorAll('.card');
+            const searchTerm = query.toLowerCase();
+            
+            cards.forEach(card => {
+                const title = card.querySelector('strong').textContent.toLowerCase();
+                const chips = Array.from(card.querySelectorAll('.chip')).map(chip => chip.textContent.toLowerCase());
+                const matches = title.includes(searchTerm) || chips.some(chip => chip.includes(searchTerm));
+                
+                if (matches) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Agregar animación de entrada
+        window.addEventListener('load', function() {
+            document.querySelector('.dashboard').style.opacity = '1';
+            document.querySelector('.dashboard').style.transform = 'translateY(0)';
+            
+            // Cargar tema guardado al iniciar
+            loadSavedTheme();
+        });
+
+        // Sistema de temas mejorado con paletas completas
+        const themes = {
+            default: {
+                primary: '#6366f1',
+                secondary: '#8b5cf6',
+                accent: '#ec4899',
+                background: '#f8fafc',
+                backgroundSecondary: '#e2e8f0',
+                text: '#1a1a1a',
+                textSecondary: '#64748b',
+                textMuted: '#94a3b8',
+                surface: '#ffffff',
+                surfaceSecondary: '#f1f5f9',
+                border: '#e2e8f0',
+                borderLight: '#f1f5f9',
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(255, 255, 255, 0.95)',
+                success: '#10b981',
+                warning: '#f59e0b',
+                error: '#ef4444',
+                info: '#3b82f6'
+            },
+            dark: {
+                primary: '#8b5cf6',
+                secondary: '#a855f7',
+                accent: '#f472b6',
+                background: '#0f172a',
+                backgroundSecondary: '#1e293b',
+                text: '#f8fafc',
+                textSecondary: '#cbd5e1',
+                textMuted: '#94a3b8',
+                surface: '#1e293b',
+                surfaceSecondary: '#334155',
+                border: '#475569',
+                borderLight: '#334155',
+                cardBg: '#1e293b',
+                sidebarBg: 'rgba(30, 41, 59, 0.95)',
+                headerBg: 'rgba(15, 23, 42, 0.98)',
+                success: '#34d399',
+                warning: '#fbbf24',
+                error: '#f87171',
+                info: '#60a5fa'
+            },
+            nature: {
+                primary: '#059669',
+                secondary: '#10b981',
+                accent: '#84cc16',
+                background: '#f0fdf4',
+                backgroundSecondary: '#dcfce7',
+                text: '#064e3b',
+                textSecondary: '#047857',
+                textMuted: '#6b7280',
+                surface: '#ffffff',
+                surfaceSecondary: '#f0fdf4',
+                border: '#bbf7d0',
+                borderLight: '#dcfce7',
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(240, 253, 244, 0.95)',
+                success: '#22c55e',
+                warning: '#eab308',
+                error: '#ef4444',
+                info: '#3b82f6'
+            },
+            sunset: {
+                primary: '#f59e0b',
+                secondary: '#f97316',
+                accent: '#f43f5e',
+                background: '#fef3c7',
+                backgroundSecondary: '#fed7aa',
+                text: '#92400e',
+                textSecondary: '#b45309',
+                textMuted: '#78716c',
+                surface: '#ffffff',
+                surfaceSecondary: '#fef3c7',
+                border: '#fed7aa',
+                borderLight: '#fef3c7',
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(254, 243, 199, 0.95)',
+                success: '#22c55e',
+                warning: '#f59e0b',
+                error: '#ef4444',
+                info: '#3b82f6'
+            },
+            ocean: {
+                primary: '#0891b2',
+                secondary: '#0ea5e9',
+                accent: '#06b6d4',
+                background: '#f0f9ff',
+                backgroundSecondary: '#e0f2fe',
+                text: '#0c4a6e',
+                textSecondary: '#0369a1',
+                textMuted: '#64748b',
+                surface: '#ffffff',
+                surfaceSecondary: '#f0f9ff',
+                border: '#bae6fd',
+                borderLight: '#e0f2fe',
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(240, 249, 255, 0.95)',
+                success: '#22c55e',
+                warning: '#f59e0b',
+                error: '#ef4444',
+                info: '#0ea5e9'
+            }
+        };
+
+        function toggleThemeMenu() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Cerrar el menú de temas al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const themeConfig = document.querySelector('.theme-config');
+            const dropdown = document.getElementById('theme-dropdown');
+            
+            if (!themeConfig.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function changeTheme(themeName) {
+            if (themeName === 'custom') {
+                document.getElementById('custom-theme').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('custom-theme').style.display = 'none';
+            }
+
+            const theme = themes[themeName];
+            if (theme) {
+                applyTheme(theme);
+                document.body.setAttribute('data-theme', themeName);
+                localStorage.setItem('selectedTheme', themeName);
+            }
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            
+            // Aplicar todas las variables CSS
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--secondary-color', theme.secondary);
+            root.style.setProperty('--accent-color', theme.accent);
+            root.style.setProperty('--background-color', theme.background);
+            root.style.setProperty('--background-secondary', theme.backgroundSecondary);
+            root.style.setProperty('--text-color', theme.text);
+            root.style.setProperty('--text-secondary', theme.textSecondary);
+            root.style.setProperty('--text-muted', theme.textMuted);
+            root.style.setProperty('--surface-color', theme.surface);
+            root.style.setProperty('--surface-secondary', theme.surfaceSecondary);
+            root.style.setProperty('--border-color', theme.border);
+            root.style.setProperty('--border-light', theme.borderLight);
+            root.style.setProperty('--card-bg', theme.cardBg);
+            root.style.setProperty('--sidebar-bg', theme.sidebarBg);
+            root.style.setProperty('--header-bg', theme.headerBg);
+            root.style.setProperty('--success-color', theme.success);
+            root.style.setProperty('--warning-color', theme.warning);
+            root.style.setProperty('--error-color', theme.error);
+            root.style.setProperty('--info-color', theme.info);
+            
+            // Aplicar estilos específicos a elementos
+            applyElementStyles(theme);
+            
+            // Actualizar colores de texto en elementos específicos
+            updateTextColors(theme);
+        }
+
+        function applyElementStyles(theme) {
+            // Aplicar a sidebar
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.style.background = theme.sidebarBg;
+                sidebar.style.borderColor = theme.border;
+            }
+            
+            // Aplicar a header
+            const header = document.querySelector('.header');
+            if (header) {
+                header.style.background = theme.headerBg;
+            }
+            
+            // Aplicar a cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.background = theme.cardBg;
+                card.style.borderColor = theme.border;
+            });
+            
+            // Aplicar a botones
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                if (btn.classList.contains('btn-primary')) {
+                    btn.style.background = `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`;
+                }
+            });
+            
+            // Aplicar a chips
+            const chips = document.querySelectorAll('.chip');
+            chips.forEach(chip => {
+                chip.style.background = `linear-gradient(135deg, ${theme.surfaceSecondary}, ${theme.borderLight})`;
+                chip.style.color = theme.textSecondary;
+                chip.style.borderColor = theme.border;
+            });
+            
+            // Aplicar a searchbar
+            const searchbar = document.querySelector('.searchbar');
+            if (searchbar) {
+                searchbar.style.background = theme.surface;
+                searchbar.style.borderColor = theme.border;
+            }
+        }
+
+        function updateTextColors(theme) {
+            // Actualizar colores de texto en elementos específicos
+            const textElements = document.querySelectorAll('p[style*="color: #64748b"]');
+            textElements.forEach(element => {
+                element.style.color = theme.textSecondary;
+            });
+            
+            // Actualizar colores de texto en cards
+            const cardTexts = document.querySelectorAll('.card p[style*="color: #64748b"]');
+            cardTexts.forEach(element => {
+                element.style.color = theme.textSecondary;
+            });
+            
+            // Actualizar colores de texto en footer
+            const footerTexts = document.querySelectorAll('.footer-section p, .footer-section ul li a');
+            footerTexts.forEach(element => {
+                if (element.tagName === 'P') {
+                    element.style.color = theme.textMuted;
+                } else {
+                    element.style.color = theme.textMuted;
+                }
+            });
+            
+            // Actualizar colores de texto en sidebar
+            const sidebarTexts = document.querySelectorAll('.sidebar .section-title');
+            sidebarTexts.forEach(element => {
+                element.style.color = theme.textSecondary;
+                element.style.borderLeftColor = theme.border;
+            });
+        }
+
+        function updateCustomTheme() {
+            const primaryColor = document.getElementById('primary-color').value;
+            const secondaryColor = document.getElementById('secondary-color').value;
+            const backgroundColor = document.getElementById('background-color').value;
+            const textColor = document.getElementById('text-color').value;
+
+            // Generar colores complementarios automáticamente
+            const customTheme = {
+                primary: primaryColor,
+                secondary: secondaryColor,
+                accent: adjustColor(primaryColor, 20), // Color más brillante
+                background: backgroundColor,
+                backgroundSecondary: adjustColor(backgroundColor, -10), // Color más oscuro
+                text: textColor,
+                textSecondary: adjustColor(textColor, 30), // Color más claro
+                textMuted: adjustColor(textColor, 50), // Color aún más claro
+                surface: '#ffffff',
+                surfaceSecondary: adjustColor(backgroundColor, 5),
+                border: adjustColor(backgroundColor, -20),
+                borderLight: adjustColor(backgroundColor, -5),
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(255, 255, 255, 0.95)',
+                success: '#10b981',
+                warning: '#f59e0b',
+                error: '#ef4444',
+                info: '#3b82f6'
+            };
+
+            applyTheme(customTheme);
+        }
+
+        // Función auxiliar para ajustar colores
+        function adjustColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+
+        function saveCustomTheme() {
+            const primaryColor = document.getElementById('primary-color').value;
+            const secondaryColor = document.getElementById('secondary-color').value;
+            const backgroundColor = document.getElementById('background-color').value;
+            const textColor = document.getElementById('text-color').value;
+
+            const customTheme = {
+                primary: primaryColor,
+                secondary: secondaryColor,
+                accent: adjustColor(primaryColor, 20),
+                background: backgroundColor,
+                backgroundSecondary: adjustColor(backgroundColor, -10),
+                text: textColor,
+                textSecondary: adjustColor(textColor, 30),
+                textMuted: adjustColor(textColor, 50),
+                surface: '#ffffff',
+                surfaceSecondary: adjustColor(backgroundColor, 5),
+                border: adjustColor(backgroundColor, -20),
+                borderLight: adjustColor(backgroundColor, -5),
+                cardBg: '#ffffff',
+                sidebarBg: 'rgba(255, 255, 255, 0.9)',
+                headerBg: 'rgba(255, 255, 255, 0.95)',
+                success: '#10b981',
+                warning: '#f59e0b',
+                error: '#ef4444',
+                info: '#3b82f6'
+            };
+
+            localStorage.setItem('customTheme', JSON.stringify(customTheme));
+            localStorage.setItem('selectedTheme', 'custom');
+            
+            // Mostrar mensaje de confirmación
+            alert('Tema personalizado guardado exitosamente');
+        }
+
+        function loadSavedTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                if (savedTheme === 'custom') {
+                    const customThemeData = localStorage.getItem('customTheme');
+                    if (customThemeData) {
+                        const customTheme = JSON.parse(customThemeData);
+                        applyTheme(customTheme);
+                        
+                        // Actualizar los valores de los inputs
+                        document.getElementById('primary-color').value = customTheme.primary;
+                        document.getElementById('secondary-color').value = customTheme.secondary;
+                        document.getElementById('background-color').value = customTheme.background;
+                        document.getElementById('text-color').value = customTheme.text;
+                        
+                        document.getElementById('theme-select').value = 'custom';
+                        document.getElementById('custom-theme').style.display = 'block';
+                    }
+                } else {
+                    changeTheme(savedTheme);
+                    document.getElementById('theme-select').value = savedTheme;
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dashboard {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+    </style>
+</body>
+</html>

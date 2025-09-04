@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorar - EventPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Base.css">
+    <script>
+        function goTo(url) { 
+            if (url.startsWith('#')) {
+                // Scroll suave a sección
+                const element = document.querySelector(url);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                window.location.href = url;
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('sidebar-open');
+        }
+
+        function filterTemplates(category) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchTemplates(query) {
+            const cards = document.querySelectorAll('.card');
+            const searchTerm = query.toLowerCase();
+            
+            cards.forEach(card => {
+                const title = card.querySelector('strong').textContent.toLowerCase();
+                const chips = Array.from(card.querySelectorAll('.chip')).map(chip => chip.textContent.toLowerCase());
+                const matches = title.includes(searchTerm) || chips.some(chip => chip.includes(searchTerm));
+                
+                if (matches) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Agregar animación de entrada
+        window.addEventListener('load', function() {
+            document.querySelector('.dashboard').style.opacity = '1';
+            document.querySelector('.dashboard').style.transform = 'translateY(0)';
+        });
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dashboard {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .sidebar-open {
+            transform: translateX(0) !important;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 1024px) {
+            .mobile-toggle { display: block; }
+            .sidebar { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h1>EventPro</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html">Inicio</a>
+                <a href="#" class="active">Explorar</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <button class="mobile-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Dashboard tipo Canva -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="primary">
+                        <button class="btn btn-primary" onclick="goTo('#crear')">
+                            <i class="fas fa-plus"></i> Crear evento
+                        </button>
+                        <button class="btn btn-secondary" onclick="goTo('#plantillas')">
+                            <i class="fas fa-layer-group"></i> Ver plantillas
+                        </button>
+                    </div>
+
+                    <div class="section-title">Navegación</div>
+                    <nav class="menu">
+                        <a href="#recientes"><span class="icon"><i class="fas fa-clock"></i></span> Recientes</a>
+                        <a href="#borradores"><span class="icon"><i class="fas fa-file"></i></span> Borradores</a>
+                        <a href="#mis-eventos"><span class="icon"><i class="fas fa-calendar-check"></i></span> Mis eventos</a>
+                        <a href="#favoritos"><span class="icon"><i class="fas fa-heart"></i></span> Favoritos</a>
+                    </nav>
+
+                    <div class="section-title">Gestión</div>
+                    <nav class="menu">
+                        <a href="#invitaciones"><span class="icon"><i class="fas fa-envelope-open-text"></i></span> Invitaciones y RSVPs</a>
+                        <a href="#proveedores"><span class="icon"><i class="fas fa-people-carry"></i></span> Proveedores</a>
+                        <a href="#lugares"><span class="icon"><i class="fas fa-map-marker-alt"></i></span> Lugares</a>
+                        <a href="#calendario"><span class="icon"><i class="fas fa-calendar-alt"></i></span> Calendario</a>
+                        <a href="#presupuestos"><span class="icon"><i class="fas fa-wallet"></i></span> Presupuestos</a>
+                    </nav>
+
+                    <div class="section-title">Categorías</div>
+                    <nav class="menu">
+                        <a href="#" onclick="filterTemplates('all')"><span class="icon"><i class="fas fa-th-large"></i></span> Todas</a>
+                        <a href="#" onclick="filterTemplates('fiesta')"><span class="icon"><i class="fas fa-birthday-cake"></i></span> Fiestas</a>
+                        <a href="#" onclick="filterTemplates('boda')"><span class="icon"><i class="fas fa-ring"></i></span> Bodas</a>
+                        <a href="#" onclick="filterTemplates('corporativo')"><span class="icon"><i class="fas fa-briefcase"></i></span> Corporativo</a>
+                        <a href="#" onclick="filterTemplates('conferencia')"><span class="icon"><i class="fas fa-microphone"></i></span> Conferencias</a>
+                    </nav>
+                </aside>
+
+                <!-- Contenido principal -->
+                <section class="content">
+                    <div class="content-header">
+                        <div>
+                            <h2 id="plantillas">Descubre plantillas increíbles</h2>
+                            <p style="color: #64748b; margin-top: 8px;">Crea eventos únicos con nuestras plantillas profesionales</p>
+                        </div>
+                        <div class="searchbar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Buscar plantillas..." oninput="searchTemplates(this.value)" />
+                        </div>
+                    </div>
+
+                    <div class="card-grid">
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-birthday-cake"></i></div>
+                            <div class="info">
+                                <strong>Invitación de cumpleaños</strong>
+                                <p style="color: #64748b; font-size: 14px;">Diseño colorido y divertido para celebrar</p>
+                                <div class="chip-row">
+                                    <span class="chip">Fiesta</span>
+                                    <span class="chip">Infantil</span>
+                                    <span class="chip">Colorido</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="boda">
+                            <div class="thumb"><i class="fas fa-ring"></i></div>
+                            <div class="info">
+                                <strong>Save the Date - Boda</strong>
+                                <p style="color: #64748b; font-size: 14px;">Elegante y romántico para tu día especial</p>
+                                <div class="chip-row">
+                                    <span class="chip">Boda</span>
+                                    <span class="chip">Elegante</span>
+                                    <span class="chip">Romántico</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="corporativo">
+                            <div class="thumb"><i class="fas fa-briefcase"></i></div>
+                            <div class="info">
+                                <strong>Invitación corporativa</strong>
+                                <p style="color: #64748b; font-size: 14px;">Profesional para eventos empresariales</p>
+                                <div class="chip-row">
+                                    <span class="chip">Empresa</span>
+                                    <span class="chip">Networking</span>
+                                    <span class="chip">Profesional</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="conferencia">
+                            <div class="thumb"><i class="fas fa-microphone"></i></div>
+                            <div class="info">
+                                <strong>Conferencia / Webinar</strong>
+                                <p style="color: #64748b; font-size: 14px;">Perfecto para eventos educativos</p>
+                                <div class="chip-row">
+                                    <span class="chip">Tecnología</span>
+                                    <span class="chip">Educación</span>
+                                    <span class="chip">Conferencia</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-music"></i></div>
+                            <div class="info">
+                                <strong>Concierto / Show</strong>
+                                <p style="color: #64748b; font-size: 14px;">Vibrante para eventos musicales</p>
+                                <div class="chip-row">
+                                    <span class="chip">Música</span>
+                                    <span class="chip">Festival</span>
+                                    <span class="chip">Entretenimiento</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="fiesta">
+                            <div class="thumb"><i class="fas fa-hamburger"></i></div>
+                            <div class="info">
+                                <strong>Feria Gastronómica</strong>
+                                <p style="color: #64748b; font-size: 14px;">Delicioso para eventos culinarios</p>
+                                <div class="chip-row">
+                                    <span class="chip">Gourmet</span>
+                                    <span class="chip">Local</span>
+                                    <span class="chip">Culinario</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="boda">
+                            <div class="thumb"><i class="fas fa-heart"></i></div>
+                            <div class="info">
+                                <strong>Invitación de compromiso</strong>
+                                <p style="color: #64748b; font-size: 14px;">Romántico para anunciar tu compromiso</p>
+                                <div class="chip-row">
+                                    <span class="chip">Compromiso</span>
+                                    <span class="chip">Romántico</span>
+                                    <span class="chip">Elegante</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card" data-category="corporativo">
+                            <div class="thumb"><i class="fas fa-chart-line"></i></div>
+                            <div class="info">
+                                <strong>Evento de networking</strong>
+                                <p style="color: #64748b; font-size: 14px;">Profesional para conectar</p>
+                                <div class="chip-row">
+                                    <span class="chip">Networking</span>
+                                    <span class="chip">Profesional</span>
+                                    <span class="chip">Empresarial</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary">Usar plantilla</button>
+                                    <button class="btn btn-outline">Vista previa</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>EventPro</h4>
+                    <p>Organizamos eventos que dejan huella</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Guías de eventos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Tips de organización</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Plantillas gratis</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog de eventos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 234 567 890</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@eventpro.com</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Calle Principal 123</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventPro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
